@@ -1,61 +1,66 @@
-"use client"
+// components/navbar.tsx
+'use client';
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
-import { useRecipeStore } from "@/hooks/use-recipe-store"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useRecipeStore } from "@/hooks/use-recipe-store";
 
 export function Navbar() {
-  const router = useRouter()
-  const { currentUser, saveCurrentUser } = useRecipeStore()
+  const router = useRouter();
+  const { currentUser, saveCurrentUser } = useRecipeStore();
 
   const handleLogout = () => {
-    saveCurrentUser(null)
-    router.push("/login")
-  }
+    saveCurrentUser(null);
+    router.push("/login");
+  };
 
   return (
-    <nav className="border-b border-border bg-card">
+    <nav className="border-b border-border bg-card sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">
+            <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center text-white font-bold">
               R
             </div>
-            <span className="font-bold text-lg">RecipeBox</span>
+            <span className="font-bold text-lg text-gray-900">RecipeBox</span>
           </Link>
 
-          <div className="flex items-center gap-4">
-            <Link href="/about" className="text-sm hover:text-primary transition">
+          {/* Navigation Links */}
+          <div className="flex items-center gap-6">
+            <Link href="/about" className="text-sm text-gray-700 hover:text-orange-600 transition">
               About
             </Link>
+
             {currentUser ? (
               <>
-                <Link href="/recipes" className="text-sm hover:text-primary transition">
+                <Link href="/recipes" className="text-sm text-gray-700 hover:text-orange-600 transition">
                   Browse
                 </Link>
-                <Link href="/upload" className="text-sm hover:text-primary transition">
-                  Share Recipe
+                <Link href="/upload" className="text-sm text-gray-700 hover:text-orange-600 transition">
+                  Share
                 </Link>
-                <Link href="/saved" className="text-sm hover:text-primary transition">
+                <Link href="/saved" className="text-sm text-gray-700 hover:text-orange-600 transition">
                   Saved
                 </Link>
-                <Link href="/profile" className="text-sm hover:text-primary transition">
+                <Link href="/profile" className="text-sm text-gray-700 hover:text-orange-600 transition">
                   Profile
                 </Link>
-                <Button variant="ghost" size="sm" onClick={handleLogout}>
+                <Link href="/premium" className="text-sm font-medium text-orange-600 hover:text-orange-700 transition">
+                  Premium
+                </Link>
+                <Button variant="ghost" size="sm" onClick={handleLogout} className="text-gray-700">
                   Logout
                 </Button>
               </>
             ) : (
               <>
                 <Link href="/login">
-                  <Button variant="ghost" size="sm">
-                    Login
-                  </Button>
+                  <Button variant="ghost" size="sm">Login</Button>
                 </Link>
                 <Link href="/signup">
-                  <Button size="sm">Sign Up</Button>
+                  <Button size="sm" className="bg-orange-500 hover:bg-orange-600">Sign Up</Button>
                 </Link>
               </>
             )}
@@ -63,5 +68,5 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-  )
+  );
 }
